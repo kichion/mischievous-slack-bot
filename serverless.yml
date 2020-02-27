@@ -58,18 +58,15 @@ package:
     - ./bin/**
 
 functions:
-  hello:
-    handler: bin/hello
+  events:
+    handler: bin/events
     events:
       - http:
-          path: hello
+          path: events
           method: get
-  world:
-    handler: bin/world
-    events:
       - http:
-          path: world
-          method: get
+          path: events
+          method: post
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
