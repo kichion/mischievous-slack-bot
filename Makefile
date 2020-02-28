@@ -13,3 +13,6 @@ deploy: clean build
 gomodgen:
 	chmod u+x gomod.sh
 	./gomod.sh
+
+lint:
+	golangci-lint run --config linter/.golangci.yml
