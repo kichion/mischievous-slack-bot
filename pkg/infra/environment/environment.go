@@ -15,6 +15,7 @@ type Variable struct {
 type Slack struct {
 	VerificationToken string `envconfig:"VERIFICATION_TOKEN" required:"true"`
 	OAuthAccessToken  string `envconfig:"BOT_OAUTH_ACCESS_TOKEN" required:"true"`
+	SigningSecret     string `envconfig:"SIGNING_SECRET" required:"true"`
 }
 
 // New は設定されている環境変数をVariable構造体にセットして返します

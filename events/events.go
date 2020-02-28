@@ -11,6 +11,7 @@ import (
 	"github.com/kichion/mischievous-slack-bot/pkg/domain/valueobject/responce"
 	"github.com/kichion/mischievous-slack-bot/pkg/infra/environment"
 	"github.com/kichion/mischievous-slack-bot/pkg/service/parser"
+	"github.com/kichion/mischievous-slack-bot/pkg/service/verifer"
 	"github.com/slack-go/slack/slackevents"
 )
 
@@ -32,6 +33,11 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	}
 	if actions.IsUndefined(event) {
 		return responce.NewGateway(http.StatusBadRequest), nil
+	}
+
+	if err := verifer.NewSecrets(request, v); err != nil {
+		log.Print(err)
+		return responce.NewGateway(http.StatusBadRequest), err
 	}
 
 	switch e := event.InnerEvent.Data.(type) {
