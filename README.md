@@ -97,3 +97,5 @@ select `Bots` (Basic Information > Add features and functionality > Bots).
 setup Events API (need Request URI from Event Subscriptions page).
 install bot to Workspace.
 getting app auth token(Install App > Bot User OAuth Access Token).
+
+### 9. Let's enjoy!!
