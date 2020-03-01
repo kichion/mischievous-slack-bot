@@ -17,6 +17,7 @@ type Slack struct {
 	VerificationToken string `envconfig:"VERIFICATION_TOKEN" required:"true"`
 	OAuthAccessToken  string `envconfig:"BOT_OAUTH_ACCESS_TOKEN" required:"true"`
 	SigningSecret     string `envconfig:"SIGNING_SECRET" required:"true"`
+	BotMention        string `envconfig:"BOT_MENTION" required:"true"`
 }
 
 // A3RT はA3RTのAPIにおける情報を保持する構造体です

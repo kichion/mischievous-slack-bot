@@ -19,7 +19,7 @@ func Talk(e *slackevents.AppMentionEvent, v *environment.Variable) (events.APIGa
 	api := slack.New(v.Slack.OAuthAccessToken)
 	talkAPI := a3rt.NewClient(&v.A3RT)
 
-	res, err := talkAPI.SmallTalk(context.Background(), strings.Split(e.Text, " ")[1]) // メンション部分を除去する
+	res, err := talkAPI.SmallTalk(context.Background(), strings.Replace(e.Text, v.Slack.BotMention+" ", "", 1)) // メンション部分を除去する
 	if err != nil {
 		log.Print(err)
 		return responce.NewGateway(http.StatusBadRequest), err
