@@ -1,22 +1,23 @@
 name: golang_ci
-on: [push]
+on:
+  push:
+    branches:
+      - 'master'
 jobs:
-
   build:
     name: Build
     runs-on: ubuntu-latest
     steps:
+      - name: Set up Go 1.13
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.13
+        id: go
 
-    - name: Set up Go 1.13
-      uses: actions/setup-go@v1
-      with:
-        go-version: 1.13
-      id: go
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2
 
-    - name: Check out code into the Go module directory
-      uses: actions/checkout@v2
-
-    - name: cache
+      - name: Cache Setting
         uses: actions/cache@v1
         with:
           path: ~/go/pkg/mod
@@ -24,12 +25,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-go-
 
-    - name: download modules
+      - name: Download modules
         if: steps.cache.outputs.cache-hit != 'true'
         run: go mod download
 
-    - name: install lint
-      run: curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.18.0
-    
-    - name: lint
-      run: make lint
+      - name: Linter
+        uses: matoous/golangci-lint-action@v1.1.0
+        with:
+          config: linter/.golangci.yml
+
+      - name: Deploy setting
+        run: serverless config credentials --provider aws --key ${{ secrets.AWS_ACCESS_KEY_ID }} --secret ${{ secrets.AWS_SECRET_ACCESS_KEY }}
