@@ -42,7 +42,8 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 
 	switch e := event.InnerEvent.Data.(type) {
 	case *slackevents.AppMentionEvent:
-		return mention.Monotonous(e, v)
+		return mention.Talk(e, v)
+		// return mention.Monotonous(e, v)
 	}
 
 	return responce.NewGateway(http.StatusBadRequest), nil
