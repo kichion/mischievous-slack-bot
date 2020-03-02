@@ -19,12 +19,12 @@ func Monotonous(e *slackevents.AppMentionEvent, v *environment.Variable) (events
 	_, _, err := api.PostMessage(
 		e.Channel,
 		slack.MsgOptionText(
-			fmt.Sprintf("hi, hello."),
+			fmt.Sprintf("pong"),
 			false,
 		),
 	)
 	if err != nil {
-		log.Print(err)
+		log.Print(err.Error())
 		return responce.NewGateway(http.StatusBadRequest), err
 	}
 

@@ -15,7 +15,7 @@ func URLVerification(body string) (events.APIGatewayProxyResponse, error) {
 	var r *slackevents.ChallengeResponse
 	err := json.Unmarshal([]byte(body), &r)
 	if err != nil {
-		log.Print(err)
+		log.Print(err.Error())
 		return responce.NewGateway(http.StatusBadRequest), err
 	}
 

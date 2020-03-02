@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -18,13 +19,13 @@ import (
 func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	v, err := environment.New()
 	if err != nil {
-		log.Print(err)
+		log.Print(err.Error())
 		return responce.NewGateway(http.StatusInternalServerError), err
 	}
 
 	event, err := parser.LambdaEventToSlackEvent(request, v)
 	if err != nil {
-		log.Print(err)
+		log.Print(err.Error())
 		return responce.NewGateway(http.StatusInternalServerError), err
 	}
 
@@ -36,12 +37,18 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	}
 
 	if err := verifer.NewSecrets(request, v); err != nil {
-		log.Print(err)
+		log.Print(err.Error())
 		return responce.NewGateway(http.StatusBadRequest), err
 	}
 
 	switch e := event.InnerEvent.Data.(type) {
 	case *slackevents.AppMentionEvent:
+		if e.Text == v.Slack.BotMention+" ping" {
+			return mention.Monotonous(e, v)
+		}
+		if strings.Contains(e.Text, " typo ") {
+			return mention.Proofreading(e, v)
+		}
 		return mention.Talk(e, v)
 		// return mention.Monotonous(e, v)
 	}

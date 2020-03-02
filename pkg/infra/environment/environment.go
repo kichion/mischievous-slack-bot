@@ -22,8 +22,9 @@ type Slack struct {
 
 // A3RT はA3RTのAPIにおける情報を保持する構造体です
 type A3RT struct {
-	TalkAPIKey string `envconfig:"TALK_API_KEY" required:"true"`
-	BaseURL    string `envconfig:"A3RT_BASE_URL" required:"true"`
+	TalkAPIKey         string `envconfig:"TALK_API_KEY" required:"true"`
+	ProofreadingAPIKey string `envconfig:"PROOFREADING_API_KEY" required:"true"`
+	BaseURL            string `envconfig:"A3RT_BASE_URL" required:"true"`
 }
 
 // New は設定されている環境変数をVariable構造体にセットして返します
