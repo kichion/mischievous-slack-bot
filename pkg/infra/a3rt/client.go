@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/kichion/mischievous-slack-bot/pkg/infra/environment"
+	"golang.org/x/xerrors"
 )
 
 type config struct {
@@ -50,7 +51,7 @@ func NewProofreadingClient(v *environment.A3RT) *Client {
 func (client *Client) do(ctx context.Context, method string, uri string, params url.Values, res interface{}) error {
 	u, err := url.Parse(client.config.baseURL)
 	if err != nil {
-		return err
+		return xerrors.Errorf("a3rt client do error: %v", err)
 	}
 
 	u.Path = path.Join(u.Path, uri)
@@ -67,14 +68,14 @@ func (client *Client) do(ctx context.Context, method string, uri string, params 
 
 	req, err := http.NewRequest(method, u.String(), body)
 	if err != nil {
-		return err
+		return xerrors.Errorf("a3rt client do error: %v", err)
 	}
 	_ = req.WithContext(ctx)
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 	resp, err := client.Do(req)
 	if err != nil {
-		return err
+		return xerrors.Errorf("a3rt client do error: %v", err)
 	}
 	defer resp.Body.Close()
 

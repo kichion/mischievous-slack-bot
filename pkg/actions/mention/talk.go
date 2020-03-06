@@ -51,7 +51,10 @@ func selectMessage(e *slackevents.AppMentionEvent, v *environment.Variable) (str
 }
 
 func definitiveResponce(e *slackevents.AppMentionEvent, v *environment.Variable) (string, error) {
-	api := talk.NewClient(&v.TalkMaster)
+	api, err := talk.NewClient(&v.TalkMaster)
+	if err != nil {
+		return "", err
+	}
 
 	msg, err := api.SelectResponce(
 		context.Background(),

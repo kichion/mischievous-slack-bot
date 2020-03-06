@@ -49,6 +49,9 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		if strings.Contains(e.Text, " typo ") {
 			return mention.Proofreading(e, v)
 		}
+		if e.Text == v.Slack.BotMention+" curry order" {
+			return mention.CurryOrder(e, v)
+		}
 		return mention.Talk(e, v)
 	}
 

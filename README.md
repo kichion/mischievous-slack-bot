@@ -99,3 +99,9 @@ install bot to Workspace.
 getting app auth token(Install App > Bot User OAuth Access Token).
 
 ### 9. Let's enjoy!!
+
+## Arrangement
+
+arrangement `mischievous-slack-bot.json` in `/pkg/infra/talk`
+
+`mischievous-slack-bot.json` is secret of google project service_account

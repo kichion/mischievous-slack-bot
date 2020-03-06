@@ -16,3 +16,6 @@ gomodgen:
 
 lint:
 	golangci-lint run --config linter/.golangci.yml
+
+test:
+	gotestsum -- -cover ./...

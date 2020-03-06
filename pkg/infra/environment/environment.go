@@ -30,8 +30,9 @@ type A3RT struct {
 
 // TalkMaster は会話用の言語マスタにおける情報を保持する構造体です
 type TalkMaster struct {
-	Token   string `envconfig:"TALK_MASTER_TOKEN" required:"true"`
-	BaseURL string `envconfig:"TALK_MASTER_URL" required:"true"`
+	SpreadsheetID string `envconfig:"TALK_MASTER_SPREADSHEET_ID" required:"true"`
+	S3Storage     string `envconfig:"TALK_MASTER_SERCRET_S3" required:"true"`
+	AWSRegion     string `envconfig:"TALK_MASTER_SERCRET_REGION" required:"true"`
 }
 
 // New は設定されている環境変数をVariable構造体にセットして返します
