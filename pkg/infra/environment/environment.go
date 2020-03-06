@@ -8,8 +8,9 @@ import (
 
 // Variable は環境変数の情報を保持する構造体です
 type Variable struct {
-	Slack Slack
-	A3RT  A3RT
+	Slack      Slack
+	A3RT       A3RT
+	TalkMaster TalkMaster
 }
 
 // Slack はSlackにおける情報を保持する構造体です
@@ -25,6 +26,12 @@ type A3RT struct {
 	TalkAPIKey         string `envconfig:"TALK_API_KEY" required:"true"`
 	ProofreadingAPIKey string `envconfig:"PROOFREADING_API_KEY" required:"true"`
 	BaseURL            string `envconfig:"A3RT_BASE_URL" required:"true"`
+}
+
+// TalkMaster は会話用の言語マスタにおける情報を保持する構造体です
+type TalkMaster struct {
+	Token   string `envconfig:"TALK_MASTER_TOKEN" required:"true"`
+	BaseURL string `envconfig:"TALK_MASTER_URL" required:"true"`
 }
 
 // New は設定されている環境変数をVariable構造体にセットして返します

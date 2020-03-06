@@ -50,7 +50,6 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 			return mention.Proofreading(e, v)
 		}
 		return mention.Talk(e, v)
-		// return mention.Monotonous(e, v)
 	}
 
 	return responce.NewGateway(http.StatusBadRequest), nil
