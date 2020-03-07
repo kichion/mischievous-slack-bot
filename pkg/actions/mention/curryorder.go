@@ -26,9 +26,13 @@ func CurryOrder(e *slackevents.AppMentionEvent, v *environment.Variable) (events
 			slack.NewSectionBlock(headerText, nil, nil),
 			divider,
 			createCurrySection("ビーフカレー", 400, "シンプルなカレーライス", "vote_beef"),
+			createCurryVoteContext("vote_beef"),
 			createCurrySection("ビーフカレー大盛り", 500, "大食らいをも満たすシンプルなカレーライス", "vote_big_beef"),
+			createCurryVoteContext("vote_big_beef"),
 			createCurrySection("カツカレー", 500, "物足りなさを感じさせないわがままなカレーライス", "vote_cutlet"),
+			createCurryVoteContext("vote_cutlet"),
 			createCurrySection("カツカレー大盛り", 600, "コレでだめなら自分で作れなカレーライス", "vote_big_cutlet"),
+			createCurryVoteContext("vote_big_cutlet"),
 			divider,
 		),
 	); err != nil {
@@ -43,11 +47,19 @@ func CurryOrder(e *slackevents.AppMentionEvent, v *environment.Variable) (events
 func createCurrySection(name string, amount int, desc string, btnVal string) *slack.SectionBlock {
 	txt := slack.NewTextBlockObject(
 		"mrkdwn",
-		fmt.Sprintf(":dollar: ¥%d【:curry: *%s*】\n%s", name, amount, desc),
+		fmt.Sprintf(":dollar: ¥%d【:curry: *%s* 】\n%s", amount, name, desc),
 		false,
 		false,
 	)
 	btnTxt := slack.NewTextBlockObject("plain_text", "追加", true, false)
-	btn := slack.NewButtonBlockElement("", btnVal, btnTxt)
+	btn := slack.NewButtonBlockElement(btnVal, btnVal, btnTxt)
+
 	return slack.NewSectionBlock(txt, nil, slack.NewAccessory(btn))
+}
+
+func createCurryVoteContext(btnVal string) *slack.ContextBlock {
+	contextTxt := slack.NewTextBlockObject("plain_text", "注文なし", true, false)
+	context := slack.NewContextBlock(btnVal, []slack.MixedElement{contextTxt}...)
+
+	return context
 }

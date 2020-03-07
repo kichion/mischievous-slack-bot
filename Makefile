@@ -2,7 +2,8 @@
 
 build: gomodgen
 	export GO111MODULE=on
-	env GOOS=linux go build -ldflags="-s -w" -o bin/events events/events.go
+	env GOOS=linux go build -ldflags="-s -w" -o bin/events events/main.go
+	env GOOS=linux go build -ldflags="-s -w" -o bin/callback callback/main.go
 
 clean:
 	rm -rf ./bin ./vendor Gopkg.lock

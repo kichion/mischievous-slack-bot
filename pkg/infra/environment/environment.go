@@ -25,7 +25,6 @@ type Slack struct {
 type A3RT struct {
 	TalkAPIKey         string `envconfig:"TALK_API_KEY" required:"true"`
 	ProofreadingAPIKey string `envconfig:"PROOFREADING_API_KEY" required:"true"`
-	BaseURL            string `envconfig:"A3RT_BASE_URL" required:"true"`
 }
 
 // TalkMaster は会話用の言語マスタにおける情報を保持する構造体です

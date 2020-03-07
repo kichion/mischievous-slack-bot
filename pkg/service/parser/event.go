@@ -2,9 +2,12 @@ package parser
 
 import (
 	"encoding/json"
+	"net/url"
+	"strings"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/kichion/mischievous-slack-bot/pkg/infra/environment"
+	"github.com/slack-go/slack"
 	"github.com/slack-go/slack/slackevents"
 )
 
@@ -18,4 +21,15 @@ func LambdaEventToSlackEvent(request events.APIGatewayProxyRequest, v *environme
 			},
 		),
 	)
+}
+
+// LambdaEventToInteractionCallback はLambda EventをInteraction Callbackへ変換します
+func LambdaEventToInteractionCallback(request events.APIGatewayProxyRequest, v *environment.Variable) (*slack.InteractionCallback, error) {
+	str, _ := url.QueryUnescape(request.Body)
+	str = strings.Replace(str, "payload=", "", 1)
+	var payload slack.InteractionCallback
+	if err := json.Unmarshal([]byte(str), &payload); err != nil {
+		return nil, err
+	}
+	return &payload, nil
 }

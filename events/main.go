@@ -16,7 +16,7 @@ import (
 	"github.com/slack-go/slack/slackevents"
 )
 
-func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+func eventHandler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
 	v, err := environment.New()
 	if err != nil {
 		log.Print(err.Error())
@@ -59,5 +59,5 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 }
 
 func main() {
-	lambda.Start(handler)
+	lambda.Start(eventHandler)
 }
