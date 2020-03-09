@@ -102,6 +102,6 @@ getting app auth token(Install App > Bot User OAuth Access Token).
 
 ## Arrangement
 
-arrangement `mischievous-slack-bot.json` in `/pkg/infra/talk`
+arrangement `mischievous-slack-bot.json` in `S3`
 
 `mischievous-slack-bot.json` is secret of google project service_account
