@@ -4,7 +4,6 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
-	"github.com/kichion/mischievous-slack-bot/pkg/infra/environment"
 )
 
 // S3 S3の情報を保持する構造体です
@@ -14,18 +13,24 @@ type S3 struct {
 	Bucket string
 }
 
+// Selecable はS3を閲覧する振る舞いを表現するインターフェースです
+type Selecable interface {
+	Region() string
+	S3() string
+}
+
 // NewClient はs3を取り回すClientを生成して返します
-func NewClient(v *environment.TalkMaster) (*S3, error) {
+func NewClient(v Selecable) (*S3, error) {
 	sess, err := session.NewSession(&aws.Config{
-		Region: aws.String(v.AWSRegion),
+		Region: aws.String(v.Region()),
 	})
 	if err != nil {
 		return nil, err
 	}
 	return &S3{
 		s3.New(sess),
-		v.AWSRegion,
-		v.S3Storage,
+		v.Region(),
+		v.S3(),
 	}, nil
 }
 

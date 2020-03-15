@@ -8,9 +8,10 @@ import (
 
 // Variable は環境変数の情報を保持する構造体です
 type Variable struct {
-	Slack      Slack
-	A3RT       A3RT
-	TalkMaster TalkMaster
+	Slack       Slack
+	A3RT        A3RT
+	TalkMaster  TalkMaster
+	OrderMaster OrderMaster
 }
 
 // Slack はSlackにおける情報を保持する構造体です
@@ -32,6 +33,33 @@ type TalkMaster struct {
 	SpreadsheetID string `envconfig:"TALK_MASTER_SPREADSHEET_ID" required:"true"`
 	S3Storage     string `envconfig:"TALK_MASTER_SERCRET_S3" required:"true"`
 	AWSRegion     string `envconfig:"TALK_MASTER_SERCRET_REGION" required:"true"`
+}
+
+// S3 はTalkMasterの認証情報保存先S3バケット名を返します
+func (t TalkMaster) S3() string {
+	return t.S3Storage
+}
+
+// Region はTalkMasterの認証情報保存先リージョン名を返します
+func (t TalkMaster) Region() string {
+	return t.AWSRegion
+}
+
+// OrderMaster は注文用の商品マスタにおける情報を保持する構造体です
+type OrderMaster struct {
+	SpreadsheetID string `envconfig:"ORDER_MASTER_SPREADSHEET_ID" required:"true"`
+	S3Storage     string `envconfig:"ORDER_MASTER_SERCRET_S3" required:"true"`
+	AWSRegion     string `envconfig:"ORDER_MASTER_SERCRET_REGION" required:"true"`
+}
+
+// S3 はOrderMasterの認証情報保存先S3バケット名を返します
+func (o OrderMaster) S3() string {
+	return o.S3Storage
+}
+
+// Region はOrderMasterの認証情報保存先リージョン名を返します
+func (o OrderMaster) Region() string {
+	return o.AWSRegion
 }
 
 // New は設定されている環境変数をVariable構造体にセットして返します

@@ -91,7 +91,7 @@ func (client *Client) getRange(ctx context.Context) (*sheets.ValueRange, error) 
 		return nil, xerrors.Errorf("talk master getRange error: %v", err)
 	}
 
-	r, err := sheetService.Spreadsheets.Values.Get(client.config.spreadsheetID, "A2:C").Context(ctx).Do()
+	r, err := sheetService.Spreadsheets.Values.Get(client.config.spreadsheetID, "talk!A2:C").Context(ctx).Do()
 	if err != nil {
 		log.Printf("Unable to get Spreadsheets. %v", err)
 		return nil, xerrors.Errorf("talk master getRange error: %v", err)
